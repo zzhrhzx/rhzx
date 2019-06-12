@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+
+<mapper namespace="com.rhzx.rhzx_boot.mapper.UserLoginDao">
+
+    <insert id="saveUser" parameterType="com.rhzx.rhzx_boot.po.UserLogin">
+    INSERT INTO user_login
+        (
+          userId,
+          role,
+          password,
+          createUser,
+          createDate,
+          updateDate,
+          lastUpdateUser
+        ) VALUES (
+          #{userId},
+          #{role},
+          #{password},
+          #{createUser},
+          now(),
+          now(),
+          #{createUser}
+        )
+    </insert>
+    <select id="getAllUser" resultType="java.lang.String">
+         select userId  from user_login
+    </select>
+    <select id="loginUser" resultType="com.rhzx.rhzx_boot.po.UserLogin">
+        select * from user_login
+        <where>
+            <if test="userId !=null and userId !='' ">
+                <![CDATA[and (userId = #{userId})]]>
+            </if>
+
+            <if test="password !=null and password !=''">
+                <![CDATA[and (password = #{password})]]>
+            </if>
+        </where>
+    </select>
+    <update id="updateUserLogin">
+        UPDATE user_login
+        <set>
+            <if test="userLogin.role != null">
+                `role` = #{userLogin.role},
+            </if>
+            <if test="userLogin.password != null">
+                `password` = #{userLogin.password},
+            </if>
+            updateDate=now(),
+            lastLoginDate = now(),
+            <if test="userLogin.lastUpdateUser != null">
+                `lastUpdateUser` = #{userLogin.lastUpdateUser}
+            </if>
+        </set>
+        WHERE userId=#{userLogin.userId}
+    </update>
+    <delete id="deleteUser" parameterType="com.rhzx.rhzx_boot.po.UserLogin">
+        delete from user_login
+        where userId=#{userLogin.userId}
+    </delete>
+</mapper>
