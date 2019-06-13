@@ -27,6 +27,11 @@ public class UserLoginServiceImpl implements UserLoginService {
     }
 
     @Override
+    public List<UserLogin> getAllUserList(UserLogin userLogin) {
+        return userLoginDao.getAllUserList(userLogin);
+    }
+
+    @Override
     public UserLogin loginUser(String name, String password) {
         UserLogin userLogin = userLoginDao.loginUser(name, password);
         if (userLogin == null) {

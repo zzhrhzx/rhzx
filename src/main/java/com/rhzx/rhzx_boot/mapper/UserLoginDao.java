@@ -13,6 +13,8 @@ public interface UserLoginDao {
 
     List<String> getAllUser();
 
+    List<UserLogin> getAllUserList(@Param("userLogin") UserLogin userLogin);
+
     UserLogin loginUser(@Param("userId") String name, @Param("password") String password);
 
     void updateUserLogin(@Param("userLogin") UserLogin userLogin);

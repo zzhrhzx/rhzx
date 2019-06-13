@@ -57,6 +57,13 @@ public class UserLoginController {
         return new Response().success(userLogin);
     }
 
+    @RequestMapping(value = "/getAllUser", method = RequestMethod.POST, produces = "application/json; charset=UTF-8")
+    @ResponseBody
+    private Response getAllUser(HttpServletRequest request, @RequestBody UserLogin userLogin) {
+        List<UserLogin> userList = userLoginService.getAllUserList(userLogin);
+        return new Response().success(userList);
+    }
+
     @RequestMapping(value = "/updateUserLogin", method = RequestMethod.POST, produces = "application/json; charset=UTF-8")
     @ResponseBody
     private Response updateUserLogin(HttpServletRequest request, @RequestBody UserLogin userLogin) {

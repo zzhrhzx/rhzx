@@ -10,6 +10,8 @@ public interface UserLoginService {
 
     List<String> getAllUser();
 
+    List<UserLogin> getAllUserList(UserLogin userLogin);
+
     UserLogin loginUser(String name, String password);
 
     void updateUserLogin(UserLogin userLogin);

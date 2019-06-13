@@ -27,6 +27,24 @@
     <select id="getAllUser" resultType="java.lang.String">
          select userId  from user_login
     </select>
+    <select id="getAllUserList" parameterType="com.rhzx.rhzx_boot.po.UserLogin"
+            resultType="com.rhzx.rhzx_boot.po.UserLogin">
+        select
+        *
+        from user_login
+        <where>
+            <if test="userLogin.role == '00'.toString()">
+                <![CDATA[role in ('00','01','02')]]>
+            </if>
+            <if test="userLogin.role == '01'.toString()">
+                <![CDATA[role in('02','01')]]>
+            </if>
+            <if test="userLogin.role == '02'.toString()">
+                <![CDATA[role in('02')]]>
+            </if>
+        </where>
+        <![CDATA[ORDER BY role asc ]]>
+    </select>
     <select id="loginUser" resultType="com.rhzx.rhzx_boot.po.UserLogin">
         select * from user_login
         <where>
