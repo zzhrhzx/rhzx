@@ -45,16 +45,17 @@ public class UserLoginController {
     }
 
     @RequestMapping(value = "/login", method = RequestMethod.POST, produces = "application/json; charset=UTF-8")
-    public Response login(HttpServletResponse response, HttpServletRequest request, @RequestParam String userId, @RequestParam String password) throws IOException {
+    @ResponseBody
+    public Response login(HttpServletResponse response, HttpServletRequest request,@RequestBody UserLogin userLogin ) throws IOException {
         List<String> allUser = userLoginService.getAllUser();
-        if (allUser.contains(userId) != true) {
+        if (allUser.contains(userLogin.getUserId()) != true) {
             return new Response().success("用户名不存在！");
         }
-        UserLogin userLogin = userLoginService.loginUser(userId, password);
-        if (userLogin == null) {
+        UserLogin userLogin1 = userLoginService.loginUser(userLogin.getUserId(), userLogin.getPassword());
+        if (userLogin1 == null) {
             return new Response().success("密码错误");
         }
-        return new Response().success(userLogin);
+        return new Response().success(userLogin1);
     }
 
     @RequestMapping(value = "/getAllUser", method = RequestMethod.POST, produces = "application/json; charset=UTF-8")
